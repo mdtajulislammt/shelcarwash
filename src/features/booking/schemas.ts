@@ -130,10 +130,12 @@ export const paymentIntentSchema = z.object({
 export type PaymentIntent = z.infer<typeof paymentIntentSchema>;
 
 /** Turns zod issues into a `{ field: message }` map for the form (first message per field). */
-export function toFieldErrors(error: z.ZodError): Partial<Record<CustomerField, string>> {
-  const out: Partial<Record<CustomerField, string>> = {};
+export function toFieldErrors<K extends string = CustomerField>(
+  error: z.ZodError,
+): Partial<Record<K, string>> {
+  const out: Partial<Record<K, string>> = {};
   for (const issue of error.issues) {
-    const field = issue.path[issue.path.length - 1] as CustomerField;
+    const field = issue.path[issue.path.length - 1] as K;
     if (field && !out[field]) out[field] = issue.message;
   }
   return out;

@@ -7,4 +7,11 @@ export const endpoints = {
   booking: (id: string) => `/api/bookings/${encodeURIComponent(id)}`,
   cancelBooking: (id: string) => `/api/bookings/${encodeURIComponent(id)}/cancel`,
   paymentIntent: '/api/payments/intent',
+  authRequestCode: '/api/auth/code',
+  authVerifyCode: '/api/auth/verify',
+  authGoogle: '/api/auth/google',
+  accountSettings: '/api/me/settings',
+  accountEvents: '/api/me/events',
+  accountEvent: (id: string) => `/api/me/events/${encodeURIComponent(id)}`,
+  walletSaveLink: '/api/wallet/save-link',
 } as const;

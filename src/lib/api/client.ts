@@ -105,4 +105,8 @@ export const apiClient = {
     apiRequest<T>(path, { ...opts, method: 'GET' }),
   post: <T>(path: string, body?: unknown, opts?: Omit<RequestOptions<T>, 'method' | 'body'>) =>
     apiRequest<T>(path, { ...opts, method: 'POST', body }),
+  put: <T>(path: string, body?: unknown, opts?: Omit<RequestOptions<T>, 'method' | 'body'>) =>
+    apiRequest<T>(path, { ...opts, method: 'PUT', body }),
+  delete: <T>(path: string, opts?: Omit<RequestOptions<T>, 'method' | 'body'>) =>
+    apiRequest<T>(path, { ...opts, method: 'DELETE' }),
 };

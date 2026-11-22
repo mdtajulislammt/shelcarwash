@@ -209,6 +209,8 @@ Response `201` (`Booking`):
 
 At least one of `email` / `phone` is required (phone as digits). Returns `Booking[]`, newest first.
 (Later: replace with an authenticated `GET /api/me/bookings` or a magic-link/OTP flow.)
+The `/account` page derives the profile (name, email, phone, last mobile address) from this list;
+with auth, add `GET /api/me` returning the same `customer` shape.
 
 ## GET /api/bookings/:id
 
@@ -251,3 +253,81 @@ The amount comes from the stored booking, never from the client. The browser con
 `clientSecret` with Stripe.js (card element / Payment Request button for Google Pay); a Stripe
 webhook (`payment_intent.succeeded`) sets the booking to `paymentStatus: "paid"` and
 `transactionId`.
+
+---
+
+## Authentication (passwordless)
+
+The client stores the returned `token` and sends `Authorization: Bearer <token>` on every request.
+`GET /api/bookings?email=` must only return bookings for the signed-in customer once auth is on.
+
+### POST /api/auth/code
+
+Request: `{ "email": "jane@example.com" }` or `{ "phone": "9255550100" }`
+
+Response: `{ "sentTo": "j***@example.com" }` — send a 6-digit code (email or SMS), valid 10 minutes.
+
+### POST /api/auth/verify
+
+Request: `{ "email": "jane@example.com", "code": "482913" }`
+
+Response: `{ "token": "…", "email": "jane@example.com" }` — `401 INVALID_CODE`, `410 CODE_EXPIRED`.
+
+### POST /api/auth/google
+
+Request: `{ "credential": "<Google ID token>" }` from Google Identity Services
+(`VITE_GOOGLE_CLIENT_ID`). Verify the token with Google (audience = client ID), then respond like
+`/api/auth/verify`.
+
+## Account (requires auth)
+
+### GET /api/me/settings · PUT /api/me/settings
+
+```json
+{
+  "fullName": "Jane Doe",
+  "phone": "(925) 555-0100",
+  "streetAddress": "1 Main St",
+  "city": "Dublin",
+  "zipCode": "94568",
+  "smsReminders": true,
+  "emailUpdates": true
+}
+```
+
+`GET` returns `null` until saved once. Address fields are all empty, or a full service-area address
+(same city/ZIP rules as bookings → `422 OUT_OF_AREA`). Used to pre-fill the booking form.
+
+### GET /api/me/events · POST /api/me/events · DELETE /api/me/events/:id
+
+Personal calendar entries ("Add Manual Event"). They do **not** reserve a slot.
+
+```json
+{
+  "id": "EV-…",
+  "title": "Pick up car",
+  "date": "2026-11-24",
+  "startTime": "09:30",
+  "endTime": "10:30",
+  "vehicle": "2024 Porsche 911",
+  "location": "",
+  "notes": "",
+  "createdAt": "2026-11-22T18:00:00.000Z"
+}
+```
+
+`POST` takes the same fields without `id` / `createdAt`; `endTime` must be after `startTime`.
+
+Calendar sync needs no endpoint: the browser builds "Add to Google Calendar" links and `.ics`
+files (`src/lib/calendarExport.ts`).
+
+## POST /api/wallet/save-link (requires auth)
+
+Request: `{ "passIds": ["booking-CC-…", "cert-CC-…"] }` (ids from the Passes page:
+`booking-<bookingId>`, `plan-<bookingId>`, `cert-<bookingId>`).
+
+Response: `{ "saveUrl": "https://pay.google.com/gp/v/save/<signed JWT>" }`
+
+The server creates/updates the Google Wallet pass objects with its issuer account (Google Wallet
+API, service-account key — never in the browser) and returns the signed save link. The browser
+opens it; Google shows its own "Save to Wallet" screen.

@@ -12,7 +12,8 @@
 ```
 src/
   app/          App.tsx, router.tsx, providers.tsx (QueryClient), RootLayout, ScrollToTop
-  pages/        Route components: Home, Booking, Gallery, MyBookings, Privacy, Terms, NotFound
+  pages/        Route components: Home, Booking, Gallery, MyBookings, Passes, Account, Privacy, Terms,
+                NotFound
   features/
     booking/    Booking flow (vehicle → package → add-ons → schedule → details → checkout)
       components/          VehicleSelector, PackageSelector, AddOns, Recurring, Scheduler,
@@ -23,6 +24,18 @@ src/
       utils/               pricing.ts, serviceArea.ts (+ tests)
       schemas.ts           zod schemas = form validation = API contract types
     bookings/   "My Bookings": list, details, cancel (useBookings, useCancelBooking, lookupStore)
+    account/    "My Account" (/account): profile header, appointment calendar, service-location
+                map, upcoming appointments, verified address. Derived from the customer's bookings
+                (useAccount); backend phase → authenticated GET /api/me. Settings modal
+                (contact, default address, notifications), Add Manual Event, calendar sync
+                (Google Calendar link / .ics via lib/calendarExport.ts).
+                "My Passes" (/passes): wallet-card style booking passes, maintenance plans and
+                service certificates built from bookings (utils/passes.ts). Backend phase: issue
+                them as Google Wallet passes via the Google Wallet API (issuer-side only) —
+                WalletModal asks POST /api/wallet/save-link and opens the returned URL.
+    auth/       Passwordless sign-in: SignInForm (email/SMS one-time code) + GoogleSignInButton
+                (Google Identity Services, shown when VITE_GOOGLE_CLIENT_ID is set). Session
+                (contact + token) lives in bookings/store/lookupStore and is sent as Bearer token.
     gallery/    BeforeAfterGallery
     marketing/  Hero
   components/
@@ -31,7 +44,8 @@ src/
   config/       site.ts (business config), env.ts (validated import.meta.env)
   data/         services.ts (catalog), gallery.ts
   lib/          api/{client, endpoints, queryKeys}, dates.ts (LA time), format.ts, storage.ts
-  services/     catalog / availability / serviceArea / booking / payment services
+  services/     catalog / availability / serviceArea / booking / payment / auth / account /
+                wallet services
                 (interface + mock + http), index.ts picks the implementation
   types/        Shared domain types
   styles/       index.css (theme tokens)

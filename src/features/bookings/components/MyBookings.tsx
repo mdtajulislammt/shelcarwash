@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { CalendarCheck } from 'lucide-react';
 import { Spinner } from '@/components/ui/Spinner';
-import type { Booking, BookingLookup } from '@/types';
+import type { Booking } from '@/types';
 import { useBookings, useCancelBooking } from '../hooks/useBookings';
 import { useLookupStore } from '../store/lookupStore';
 import { BookingDetailsPanel } from './BookingDetailsPanel';
@@ -12,17 +12,11 @@ import { EmptyBookings } from './EmptyBookings';
 /** "My Bookings" — list on the left, booking details on the right (original dashboard layout). */
 export function MyBookings({ onStartNewBooking }: { onStartNewBooking: () => void }) {
   const lookup = useLookupStore((s) => s.lookup);
-  const setLookup = useLookupStore((s) => s.setLookup);
   const clearLookup = useLookupStore((s) => s.clearLookup);
   const { data: bookings, isLoading, error } = useBookings(lookup);
   const cancel = useCancelBooking();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [toCancel, setToCancel] = useState<Booking | null>(null);
-
-  const handleLookup = (next: BookingLookup) => {
-    setSelectedId(null);
-    setLookup(next);
-  };
 
   if (lookup && isLoading) {
     return (
@@ -36,11 +30,7 @@ export function MyBookings({ onStartNewBooking }: { onStartNewBooking: () => voi
     return (
       <div className="space-y-8 py-6">
         {error && <p className="text-xs text-rose-400">{error.message}</p>}
-        <EmptyBookings
-          lookup={lookup}
-          onLookup={handleLookup}
-          onStartNewBooking={onStartNewBooking}
-        />
+        <EmptyBookings lookup={lookup} onStartNewBooking={onStartNewBooking} />
       </div>
     );
   }

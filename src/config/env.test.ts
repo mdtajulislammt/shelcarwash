@@ -3,7 +3,12 @@ import { parseEnv } from './env';
 
 describe('env', () => {
   it('defaults to the mock API', () => {
-    expect(parseEnv({})).toEqual({ apiUrl: '', useMockApi: true, stripePublishableKey: '' });
+    expect(parseEnv({})).toEqual({
+      apiUrl: '',
+      useMockApi: true,
+      stripePublishableKey: '',
+      googleClientId: '',
+    });
   });
 
   it('requires VITE_API_URL when mocks are off', () => {

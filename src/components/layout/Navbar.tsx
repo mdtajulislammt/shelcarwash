@@ -1,11 +1,14 @@
-import { CalendarCheck } from 'lucide-react';
+import { UserRound } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import logoImg from '@/assets/images/logo.jpg';
 import { SITE } from '@/config/site';
+import { ProfileAvatar } from '@/features/account/components/ProfileAvatar';
+import { useAccount } from '@/features/account/hooks/useAccount';
 import { Container } from './Container';
 
-/** Sticky top header: brand + "My Bookings" shortcut. */
+/** Sticky top header: brand + customer profile shortcut. */
 export function Navbar() {
+  const { profile, upcoming } = useAccount();
   return (
     <header className="sticky top-0 z-40 bg-[#0a0a0c]/90 backdrop-blur-xl border-b border-zinc-800/80 text-zinc-100">
       <Container>
@@ -36,16 +39,26 @@ export function Navbar() {
           </Link>
 
           <Link
-            to="/bookings"
-            aria-label="My Bookings"
+            to="/account"
+            aria-label="My Account"
             className="hidden sm:flex items-center space-x-2 px-3 py-1.5 min-h-11 min-w-11 justify-center rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 transition-colors cursor-pointer shrink-0"
           >
-            <div className="w-6 h-6 rounded-full bg-yellow-300 text-black flex items-center justify-center">
-              <CalendarCheck className="w-3.5 h-3.5" />
-            </div>
-            <div className="text-left leading-tight hidden sm:block">
-              <span className="text-[11px] font-bold text-white block">My Bookings</span>
-              <span className="text-[9px] text-lime-400 font-medium block">Manage & cancel</span>
+            {profile ? (
+              <ProfileAvatar name={profile.fullName} className="w-6 h-6 text-[9px]" />
+            ) : (
+              <div className="w-6 h-6 rounded-full bg-yellow-300 text-black flex items-center justify-center">
+                <UserRound className="w-3.5 h-3.5" />
+              </div>
+            )}
+            <div className="text-left leading-tight">
+              <span className="text-[11px] font-bold text-white block">
+                {profile?.fullName ?? 'My Account'}
+              </span>
+              <span className="text-[9px] text-lime-400 font-medium block">
+                {profile
+                  ? `${upcoming.length} upcoming appointment${upcoming.length === 1 ? '' : 's'}`
+                  : 'Profile & bookings'}
+              </span>
             </div>
           </Link>
         </div>

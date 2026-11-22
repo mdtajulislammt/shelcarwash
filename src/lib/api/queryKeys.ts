@@ -8,4 +8,6 @@ export const queryKeys = {
   bookings: (lookup: BookingLookup) =>
     ['bookings', lookup.email ?? '', lookup.phone ?? ''] as const,
   bookingsAll: ['bookings'] as const,
+  accountSettings: (contact: string) => ['account', 'settings', contact] as const,
+  accountEvents: (contact: string) => ['account', 'events', contact] as const,
 };

@@ -1,15 +1,14 @@
 import { Calendar, CalendarCheck } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { SignInForm } from '@/features/auth/components/SignInForm';
 import type { BookingLookup } from '@/types';
-import { BookingLookupForm } from './BookingLookupForm';
 
 interface EmptyBookingsProps {
   lookup: BookingLookup | null;
-  onLookup: (lookup: BookingLookup) => void;
   onStartNewBooking: () => void;
 }
 
-export function EmptyBookings({ lookup, onLookup, onStartNewBooking }: EmptyBookingsProps) {
+export function EmptyBookings({ lookup, onStartNewBooking }: EmptyBookingsProps) {
   const searched = lookup?.email ?? lookup?.phone;
 
   return (
@@ -31,12 +30,12 @@ export function EmptyBookings({ lookup, onLookup, onStartNewBooking }: EmptyBook
           <Calendar className="w-6 h-6" />
         </div>
         <p className="text-white text-sm font-bold">
-          {searched ? `No bookings found for ${searched}` : 'Find your bookings'}
+          {searched ? `No bookings found for ${searched}` : 'Sign in to see your bookings'}
         </p>
         <p className="text-zinc-400 text-xs max-w-sm mx-auto">
-          Enter the email address or phone number you used at checkout.
+          Continue with Google, or get a one-time code at the email or phone you used at checkout.
         </p>
-        <BookingLookupForm onSubmit={onLookup} />
+        <SignInForm />
       </div>
 
       <div className="pt-4 border-t border-zinc-800/80 flex flex-col sm:flex-row items-center justify-between gap-4">

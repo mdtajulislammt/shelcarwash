@@ -36,6 +36,7 @@ npm run dev                  # http://localhost:5173
 | `VITE_USE_MOCK_API`           | `true`  | `true` = in-browser mock services (localStorage `cc_bookings_v1`, fake latency). `false` = real REST API. |
 | `VITE_API_URL`                | —       | Backend base URL, e.g. `https://api.constantclean.com`. Required when `VITE_USE_MOCK_API=false`.          |
 | `VITE_STRIPE_PUBLISHABLE_KEY` | —       | Reserved for Stripe (card / Google Pay) in the backend phase. Unused for now.                             |
+| `VITE_GOOGLE_CLIENT_ID`       | —       | Google OAuth client ID for "Continue with Google". Empty = button hidden (email/SMS code sign-in only).   |
 
 Variables are validated at startup in `src/config/env.ts`; an invalid combination throws a clear
 error.
@@ -45,8 +46,9 @@ error.
 ```
 src/
   app/         App, router, providers
-  pages/       Route pages (/, /book, /gallery, /bookings, /privacy, /terms, 404)
-  features/    booking/ (flow, schemas, pricing), bookings/ (My Bookings), gallery/, marketing/
+  pages/       Route pages (/, /book, /gallery, /bookings, /passes, /account, /privacy, /terms, 404)
+  features/    booking/ (flow, schemas, pricing), bookings/ (My Bookings), account/ (profile, passes),
+               gallery/, marketing/
   components/  layout/ (Navbar, MobileDock, Footer…) and ui/ (Button, Input, Modal…)
   config/      site.ts (business settings), env.ts
   data/        services catalog, gallery
@@ -70,7 +72,9 @@ Prices and packages live in `src/data/services.ts`.
 
 - **Mock (default)** — bookings are stored in this browser's localStorage. Card/Google Pay
   "payments" succeed instantly (demo, nothing is charged); Zelle/Venmo bookings stay
-  "Pending payment". Rules are enforced like the backend will: one booking per slot, service-area
+  "Pending payment". Sign-in codes are shown on screen (nothing is sent); account settings and
+  manual events are stored in localStorage (`cc_account_v1`); "Add to Google Wallet" explains that
+  it needs the backend. Rules are enforced like the backend will: one booking per slot, service-area
   ZIPs, 24-hour cancellation window (America/Los_Angeles).
 - **Real** — set `VITE_USE_MOCK_API=false` and `VITE_API_URL`. The HTTP services call the endpoints
   in `docs/API_CONTRACT.md` and validate responses with the shared zod schemas. No UI changes needed.
