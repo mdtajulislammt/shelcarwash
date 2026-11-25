@@ -1,12 +1,4 @@
-import {
-  CalendarCheck,
-  Calendar,
-  Image,
-  Sparkles,
-  Ticket,
-  UserRound,
-  type LucideIcon,
-} from 'lucide-react';
+import { CalendarCheck, Calendar, Image, Sparkles, UserRound, type LucideIcon } from 'lucide-react';
 
 export interface NavItem {
   to: string;
@@ -29,6 +21,5 @@ export const NAV_ITEMS: NavItem[] = [
     icon: CalendarCheck,
     showBookingCount: true,
   },
-  { to: '/passes', label: 'Passes', shortLabel: 'Passes', icon: Ticket },
   { to: '/account', label: 'Account', shortLabel: 'Account', icon: UserRound, isAccount: true },
 ];

@@ -51,7 +51,7 @@ export function AddEventModal({ open, onClose, defaultVehicle }: AddEventModalPr
   return (
     <Modal open={open} onClose={close} labelledBy="add-event-title">
       <div className="flex items-center space-x-2.5 border-b border-zinc-800 pb-4 pr-12">
-        <div className="p-2 rounded-xl bg-yellow-400/10 text-yellow-400 border border-yellow-400/20">
+        <div className="p-2 rounded-xl bg-brand text-ink">
           <CalendarPlus className="w-5 h-5" />
         </div>
         <div>
@@ -117,14 +117,14 @@ export function AddEventModal({ open, onClose, defaultVehicle }: AddEventModalPr
           <button
             type="button"
             onClick={close}
-            className="px-5 py-2.5 min-h-11 rounded-xl bg-[#3a3a3a] hover:bg-[#4a4a4a] border border-zinc-600 text-white font-semibold text-xs"
+            className="px-5 py-2.5 min-h-11 rounded-xl bg-card hover:bg-card-hover border border-zinc-600 text-white font-semibold text-xs"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={addEvent.isPending}
-            className="px-5 py-2.5 min-h-11 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-black font-extrabold text-xs disabled:opacity-50"
+            className="px-5 py-2.5 min-h-11 rounded-xl bg-brand hover:bg-brand-2 text-ink font-extrabold text-xs disabled:opacity-50"
           >
             {addEvent.isPending ? 'Saving…' : 'Add to Calendar'}
           </button>

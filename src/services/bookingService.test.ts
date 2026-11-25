@@ -28,6 +28,7 @@ const request = (over: Partial<CreateBookingRequest> = {}): CreateBookingRequest
     serviceType: 'mobile',
     streetAddress: '1 Main St',
     city: 'Dublin',
+    state: 'CA',
     zipCode: '94568',
     vehicleMake: 'Porsche',
     vehicleModel: '911',

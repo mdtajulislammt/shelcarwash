@@ -1,4 +1,4 @@
-import type { ZodType } from 'zod';
+import type { ZodType, ZodTypeDef } from 'zod';
 import { env } from '@/config/env';
 
 /** Error shape thrown by every service (mock and HTTP) so the UI handles both the same way. */
@@ -32,7 +32,7 @@ export interface RequestOptions<T> {
   query?: Record<string, QueryValue>;
   signal?: AbortSignal;
   /** Optional zod schema; the response is validated and typed through it. */
-  schema?: ZodType<T>;
+  schema?: ZodType<T, ZodTypeDef, unknown>;
   baseUrl?: string;
 }
 

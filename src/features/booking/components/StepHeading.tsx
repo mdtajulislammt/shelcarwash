@@ -14,7 +14,7 @@ export function StepHeading({
   return (
     <div className={aside ? 'flex items-center justify-between' : undefined}>
       <div>
-        <span className="text-xs font-bold uppercase tracking-widest text-yellow-300">{step}</span>
+        <span className="text-xs font-bold uppercase tracking-widest text-brand">{step}</span>
         <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">{title}</h2>
         {subtitle && <p className="text-zinc-400 text-sm mt-1">{subtitle}</p>}
       </div>

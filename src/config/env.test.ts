@@ -8,6 +8,7 @@ describe('env', () => {
       useMockApi: true,
       stripePublishableKey: '',
       googleClientId: '',
+      googleMapsApiKey: '',
     });
   });
 

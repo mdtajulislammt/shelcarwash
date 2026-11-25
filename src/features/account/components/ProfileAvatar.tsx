@@ -7,7 +7,7 @@ export function ProfileAvatar({ name, className }: { name: string; className?: s
     <span
       aria-hidden
       className={cn(
-        'rounded-full bg-gradient-to-br from-yellow-300 to-lime-400 text-black font-black flex items-center justify-center shrink-0',
+        'rounded-full bg-brand text-ink font-black flex items-center justify-center shrink-0',
         className,
       )}
     >

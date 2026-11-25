@@ -2,7 +2,7 @@ import type { BookingStatus } from '@/types';
 
 const LABELS: Record<BookingStatus, { text: string; className: string }> = {
   confirmed: { text: 'Confirmed & On Schedule', className: 'text-lime-400' },
-  in_progress: { text: 'Detailing In Progress', className: 'text-yellow-300' },
+  in_progress: { text: 'Detailing In Progress', className: 'text-brand' },
   completed: { text: 'Completed', className: 'text-lime-400' },
   cancelled: { text: 'Cancelled', className: 'text-rose-400' },
 };
@@ -33,7 +33,7 @@ export function BookingProgress({ status }: { status: BookingStatus }) {
               i < filled
                 ? 'bg-lime-400'
                 : i === filled && status !== 'cancelled' && status !== 'completed'
-                  ? 'bg-yellow-400'
+                  ? 'bg-brand'
                   : 'bg-zinc-700'
             }`}
           />

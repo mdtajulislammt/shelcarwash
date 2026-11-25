@@ -17,10 +17,10 @@ export function BeforeAfterGallery() {
     <div className="space-y-10 py-8">
       <div>
         <div className="flex items-center space-x-2">
-          <div className="p-2 rounded-xl bg-yellow-300/10 text-yellow-300 border border-yellow-300/20">
+          <div className="p-2 rounded-xl bg-brand text-ink">
             <Sparkles className="w-5 h-5" />
           </div>
-          <span className="text-xs font-bold uppercase tracking-wider text-yellow-300">
+          <span className="text-xs font-bold uppercase tracking-wider text-brand">
             Showroom Transformation Gallery
           </span>
         </div>
@@ -40,10 +40,10 @@ export function BeforeAfterGallery() {
           return (
             <div
               key={item.id}
-              className="bg-[#0f0f13] rounded-3xl border border-zinc-800 p-5 space-y-4 shadow-xl flex flex-col justify-between"
+              className="bg-surface-2 rounded-3xl border border-zinc-800 p-5 space-y-4 shadow-xl flex flex-col justify-between"
             >
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-yellow-300">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-brand">
                   {item.category}
                 </span>
                 <h3 className="text-lg font-bold text-white mt-0.5">{item.title}</h3>
@@ -58,7 +58,7 @@ export function BeforeAfterGallery() {
                   alt={`${item.title} After`}
                   className="absolute inset-0 w-full h-full object-cover"
                 />
-                <span className="absolute top-3 right-3 px-2.5 py-1 rounded-lg bg-lime-400 backdrop-blur-md text-black font-extrabold text-[10px] uppercase tracking-wider z-10 shadow-md">
+                <span className="absolute top-3 right-3 px-2.5 py-1 rounded-lg bg-lime-400 backdrop-blur-md text-ink font-extrabold text-[10px] uppercase tracking-wider z-10 shadow-md">
                   AFTER
                 </span>
 
@@ -77,11 +77,11 @@ export function BeforeAfterGallery() {
 
                 {/* Vertical Divider line */}
                 <div
-                  className="absolute top-0 bottom-0 w-1 bg-yellow-300 shadow-lg pointer-events-none z-20"
+                  className="absolute top-0 bottom-0 w-1 bg-brand shadow-lg pointer-events-none z-20"
                   style={{ left: `${pos}%` }}
                 >
-                  <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-yellow-300 text-black flex items-center justify-center shadow-lg font-bold">
-                    <ArrowRightLeft className="w-4 h-4 text-black" />
+                  <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-brand text-ink flex items-center justify-center shadow-lg font-bold">
+                    <ArrowRightLeft className="w-4 h-4 text-ink" />
                   </div>
                 </div>
 
@@ -111,25 +111,25 @@ export function BeforeAfterGallery() {
 
       {/* Stats Section */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-6">
-        <div className="p-5 rounded-2xl bg-[#0f0f13] border border-zinc-800 text-center">
-          <span className="text-3xl font-black text-yellow-300">1,400+</span>
+        <div className="p-5 rounded-2xl bg-surface-2 border border-zinc-800 text-center">
+          <span className="text-3xl font-black text-brand">1,400+</span>
           <span className="block text-xs text-zinc-400 mt-1 font-medium">Vehicles Detailed</span>
         </div>
-        <div className="p-5 rounded-2xl bg-[#0f0f13] border border-zinc-800 text-center flex flex-col items-center justify-center">
+        <div className="p-5 rounded-2xl bg-surface-2 border border-zinc-800 text-center flex flex-col items-center justify-center">
           <div className="flex items-center space-x-1 py-1">
             {[...Array(5)].map((_, i) => (
-              <Star key={i} className="w-6 h-6 text-yellow-300 fill-yellow-300" />
+              <Star key={i} className="w-6 h-6 text-brand fill-brand" />
             ))}
           </div>
           <span className="block text-xs text-zinc-400 mt-1 font-medium">Google Reviews</span>
         </div>
-        <div className="p-5 rounded-2xl bg-[#0f0f13] border border-zinc-800 text-center">
-          <span className="text-3xl font-black text-yellow-300">100%</span>
+        <div className="p-5 rounded-2xl bg-surface-2 border border-zinc-800 text-center">
+          <span className="text-3xl font-black text-brand">100%</span>
           <span className="block text-xs text-zinc-400 mt-1 font-medium">
             Satisfaction Guarantee
           </span>
         </div>
-        <div className="p-5 rounded-2xl bg-[#0f0f13] border border-zinc-800 text-center">
+        <div className="p-5 rounded-2xl bg-surface-2 border border-zinc-800 text-center">
           <span className="text-3xl font-black text-lime-400">3 Years</span>
           <span className="block text-xs text-zinc-400 mt-1 font-medium">
             Ceramic Coating Warranty

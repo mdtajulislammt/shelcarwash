@@ -38,7 +38,7 @@ export function Modal({ open, onClose, labelledBy, children, className }: ModalP
         aria-modal="true"
         aria-labelledby={labelledBy}
         className={cn(
-          'relative w-full max-w-lg bg-[#0f0f13] border border-zinc-800 rounded-3xl shadow-2xl p-6 sm:p-8 text-white space-y-6 my-8',
+          'relative w-full max-w-lg bg-surface-2 border border-zinc-800 rounded-3xl shadow-2xl p-6 sm:p-8 text-white space-y-6 my-8',
           className,
         )}
       >
@@ -46,7 +46,7 @@ export function Modal({ open, onClose, labelledBy, children, className }: ModalP
           type="button"
           onClick={onClose}
           aria-label="Close"
-          className="absolute top-5 right-5 p-2.5 rounded-xl bg-[#3a3a3a] text-zinc-300 hover:text-white hover:bg-[#4a4a4a] transition-colors border border-zinc-600"
+          className="absolute top-5 right-5 p-2.5 rounded-xl bg-card text-zinc-300 hover:text-white hover:bg-card-hover transition-colors border border-zinc-600"
         >
           <X className="w-5 h-5" />
         </button>

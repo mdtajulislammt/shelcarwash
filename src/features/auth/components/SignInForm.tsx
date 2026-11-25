@@ -8,9 +8,9 @@ import { CONTACT_ERROR, parseContact } from '../utils/contact';
 import { GoogleSignInButton } from './GoogleSignInButton';
 
 const FIELD =
-  'flex-1 min-w-0 px-4 py-2.5 min-h-11 rounded-xl bg-[#050505] border border-zinc-700 text-white text-sm focus:outline-none focus:border-yellow-400';
+  'flex-1 min-w-0 px-4 py-2.5 min-h-11 rounded-xl bg-page border border-zinc-700 text-white text-sm focus:outline-none focus:border-brand';
 const PRIMARY =
-  'px-5 py-2.5 min-h-11 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-black font-extrabold text-xs transition-all shadow-md flex items-center justify-center space-x-2 shrink-0 disabled:opacity-50';
+  'px-5 py-2.5 min-h-11 rounded-xl bg-brand hover:bg-brand-2 text-ink font-extrabold text-xs transition-all shadow-md flex items-center justify-center space-x-2 shrink-0 disabled:opacity-50';
 
 /**
  * Passwordless sign-in: Google, or a one-time code sent to the email/phone used for booking.
@@ -120,7 +120,7 @@ export function SignInForm() {
             type="button"
             disabled={busy}
             onClick={() => sendCode()}
-            className="relative text-lime-400 hover:text-lime-300 font-bold after:absolute after:-inset-3 after:content-['']"
+            className="relative text-brand hover:text-brand-2 font-bold after:absolute after:-inset-3 after:content-['']"
           >
             Resend code
           </button>

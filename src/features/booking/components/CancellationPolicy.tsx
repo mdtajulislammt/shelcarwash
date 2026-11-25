@@ -6,7 +6,7 @@ export function CancellationPolicy({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'p-3 rounded-xl bg-[#050505] border border-zinc-800 text-xs text-zinc-300 flex items-start space-x-2',
+        'p-3 rounded-xl bg-page border border-zinc-800 text-xs text-zinc-300 flex items-start space-x-2',
         className,
       )}
     >

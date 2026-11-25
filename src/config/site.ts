@@ -6,9 +6,10 @@ import type { TimeSlot } from '@/types';
  */
 export const SITE = {
   name: 'Constant Clean',
-  legalName: 'Constant Clean Auto Detailing',
+  legalName: 'Constant Clean LLC',
   longName: 'Constant Clean Auto Detailing Studio & Mobile Concierge',
-  phone: '[BUSINESS_PHONE]',
+  phone: '(925) 404-4304',
+  website: 'constantclean.org',
   email: '[BUSINESS_EMAIL]',
   timeZone: 'America/Los_Angeles',
   /** Studio drop-off address shown in the "Service Location" step (client to confirm). */
@@ -56,7 +57,8 @@ export const BOOKING_WINDOW_DAYS = 14;
 
 export const CANCELLATION_POLICY = {
   freeCancellationHours: 24,
-  text: "Free cancellation up to 24 hours before your appointment. Not satisfied? We'll come back and re-service at no charge.",
+  text: "You can cancel up to 24 hours before your appointment. Payments are non-refundable — if you're not satisfied, we'll come back and re-service your vehicle at no charge.",
+  short: 'Every service is prepaid. Cancel up to 24 hours before • re-service guarantee.',
 } as const;
 
 /** Manual payment handles shown for Zelle / Venmo (client to provide). */

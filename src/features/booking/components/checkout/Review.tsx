@@ -34,10 +34,10 @@ export function Review(props: ReviewProps) {
 
   return (
     <div className="space-y-3">
-      <div className="p-4 rounded-2xl bg-[#050505] border border-zinc-800 space-y-3">
+      <div className="p-4 rounded-2xl bg-page border border-zinc-800 space-y-3">
         <div className="flex justify-between items-center gap-3 text-sm font-bold border-b border-zinc-800 pb-2">
           <span className="text-zinc-200">{pkg.name}</span>
-          <span className="text-yellow-300 font-extrabold">{formatCurrency(totalPrice)}</span>
+          <span className="text-brand font-extrabold">{formatCurrency(totalPrice)}</span>
         </div>
         <div className="text-xs text-zinc-400 space-y-1">
           <Row

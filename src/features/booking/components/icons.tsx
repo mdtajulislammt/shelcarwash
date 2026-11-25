@@ -3,17 +3,17 @@ import { Car, CarFront, Dog, Droplets, Gauge, Sparkles, Sun, Truck, Wind } from 
 export function AddOnIcon({ name }: { name: string }) {
   switch (name) {
     case 'Sun':
-      return <Sun className="w-4 h-4 text-yellow-300" />;
+      return <Sun className="w-4 h-4" />;
     case 'Dog':
-      return <Dog className="w-4 h-4 text-yellow-300" />;
+      return <Dog className="w-4 h-4" />;
     case 'Gauge':
-      return <Gauge className="w-4 h-4 text-lime-400" />;
+      return <Gauge className="w-4 h-4" />;
     case 'Wind':
-      return <Wind className="w-4 h-4 text-lime-400" />;
+      return <Wind className="w-4 h-4" />;
     case 'Droplets':
-      return <Droplets className="w-4 h-4 text-lime-300" />;
+      return <Droplets className="w-4 h-4" />;
     default:
-      return <Sparkles className="w-4 h-4 text-yellow-300" />;
+      return <Sparkles className="w-4 h-4" />;
   }
 }
 

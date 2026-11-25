@@ -2,7 +2,7 @@ import { Check, Clock, Star } from 'lucide-react';
 import { formatCurrency } from '@/lib/format';
 import type { Package } from '@/types';
 import { SelectedCheck } from './SelectedCheck';
-import { IDLE_CARD, SELECTED_CARD, onActivateKey } from './selectableStyles';
+import { SELECT_CARD, onActivateKey } from './selectableStyles';
 
 interface PackageCardProps {
   pkg: Package;
@@ -19,15 +19,11 @@ export function PackageCard({ pkg, price, isSelected, onSelect }: PackageCardPro
       tabIndex={0}
       onClick={onSelect}
       onKeyDown={onActivateKey(onSelect)}
-      className={`relative p-6 sm:p-7 rounded-3xl cursor-pointer transition-all duration-200 border flex flex-col justify-between ${
-        isSelected
-          ? `${SELECTED_CARD} ring-2 ring-yellow-300/40 shadow-2xl shadow-yellow-300/20`
-          : IDLE_CARD
-      }`}
+      className={`${SELECT_CARD} relative p-6 sm:p-7 cursor-pointer flex flex-col justify-between`}
     >
       {pkg.popular && (
-        <div className="absolute -top-3 left-6 px-3 py-1 rounded-full bg-gradient-to-r from-yellow-300 via-lime-300 to-lime-400 text-black text-[10px] font-extrabold tracking-wider uppercase shadow-md flex items-center space-x-1">
-          <Star className="w-3 h-3 fill-black text-black" />
+        <div className="absolute -top-3 left-6 px-3 py-1 rounded-full bg-accent-red text-ink text-[10px] font-extrabold tracking-wider uppercase shadow-md flex items-center space-x-1">
+          <Star className="w-3 h-3 fill-ink text-ink" />
           <span>Most Popular</span>
         </div>
       )}
@@ -37,33 +33,31 @@ export function PackageCard({ pkg, price, isSelected, onSelect }: PackageCardPro
       <div>
         <div className="flex items-start justify-between">
           <div>
-            <h3 className="text-xl font-bold text-white flex items-center space-x-2">
+            <h3 className="text-xl font-bold text-card-fg flex items-center space-x-2">
               <span>{pkg.name}</span>
             </h3>
-            <p className="text-xs text-yellow-300 font-medium mt-0.5">{pkg.tagline}</p>
+            <p className="text-xs text-card-accent font-medium mt-0.5">{pkg.tagline}</p>
           </div>
 
           <div className="text-right">
-            <div className="text-2xl font-black text-white">{formatCurrency(price)}</div>
-            <div className="text-[11px] text-zinc-400 font-medium flex items-center justify-end space-x-1 mt-0.5">
-              <Clock className="w-3 h-3 text-zinc-400" />
+            <div className="text-2xl font-black text-card-fg">{formatCurrency(price)}</div>
+            <div className="text-[11px] text-card-muted font-medium flex items-center justify-end space-x-1 mt-0.5">
+              <Clock className="w-3 h-3" />
               <span>~{pkg.durationMinutes} mins</span>
             </div>
           </div>
         </div>
 
-        <p className="text-xs text-zinc-300 mt-3 leading-relaxed">{pkg.description}</p>
+        <p className="text-xs text-card-muted mt-3 leading-relaxed">{pkg.description}</p>
 
-        <div className="mt-5 space-y-2 border-t border-zinc-800/80 pt-4">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block">
+        <div className="mt-5 space-y-2 border-t border-current/15 pt-4">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-card-muted block">
             Included In Package:
           </span>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
             {pkg.features.map((feat) => (
-              <div key={feat} className="flex items-start space-x-2 text-zinc-300">
-                <Check
-                  className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${isSelected ? 'text-yellow-300' : 'text-lime-400'}`}
-                />
+              <div key={feat} className="flex items-start space-x-2 text-card-fg">
+                <Check className="w-3.5 h-3.5 shrink-0 mt-0.5 text-card-accent" />
                 <span className="text-[11px] leading-snug">{feat}</span>
               </div>
             ))}
@@ -71,19 +65,11 @@ export function PackageCard({ pkg, price, isSelected, onSelect }: PackageCardPro
         </div>
       </div>
 
-      <div className="mt-6 pt-4 border-t border-zinc-800/80 flex items-center justify-between">
-        <span
-          className={`text-xs font-medium ${isSelected ? 'text-yellow-300 font-bold' : 'text-zinc-400'}`}
-        >
+      <div className="mt-6 pt-4 border-t border-current/15 flex items-center justify-between">
+        <span className={`text-xs text-card-fg ${isSelected ? 'font-bold' : 'font-medium'}`}>
           {isSelected ? '✓ Currently Selected' : 'Click to Select'}
         </span>
-        <div
-          className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${
-            isSelected
-              ? 'bg-yellow-300 text-black shadow-md shadow-yellow-300/30'
-              : 'bg-zinc-800 text-zinc-300 group-hover:text-white'
-          }`}
-        >
+        <div className="px-4 py-2 rounded-xl text-xs font-extrabold bg-card-chip text-card-chip-fg">
           {isSelected ? 'Selected' : 'Select Package'}
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { env } from '@/config/env';
+import { useLookupStore } from '@/features/bookings/store/lookupStore';
 import { createHttpAccountService, createMockAccountService } from './accountService';
 import { createHttpAuthService, createMockAuthService } from './authService';
 import {
@@ -8,8 +9,8 @@ import {
 import { createHttpBookingService, createMockBookingService } from './bookingService';
 import { createHttpCatalogService, createMockCatalogService } from './catalogService';
 import { createHttpPaymentService, createMockPaymentService } from './paymentService';
+import { createHttpProfileService, createLocalProfileService } from './profileService';
 import { createHttpServiceAreaService, createMockServiceAreaService } from './serviceAreaService';
-import { createHttpWalletService, createMockWalletService } from './walletService';
 
 /** Picks mock or HTTP implementations from VITE_USE_MOCK_API. */
 const useMock = env.useMockApi;
@@ -25,7 +26,9 @@ export const bookingService = useMock ? createMockBookingService() : createHttpB
 export const paymentService = useMock ? createMockPaymentService() : createHttpPaymentService();
 export const authService = useMock ? createMockAuthService() : createHttpAuthService();
 export const accountService = useMock ? createMockAccountService() : createHttpAccountService();
-export const walletService = useMock ? createMockWalletService() : createHttpWalletService();
+export const profileService = useMock
+  ? createLocalProfileService()
+  : createHttpProfileService(() => !!useLookupStore.getState().token);
 
 export type { AccountService } from './accountService';
 export type { AuthService } from './authService';
@@ -33,5 +36,5 @@ export type { AvailabilityService } from './availabilityService';
 export type { BookingService } from './bookingService';
 export type { CatalogService } from './catalogService';
 export type { PaymentService } from './paymentService';
+export type { ProfileService } from './profileService';
 export type { ServiceAreaService } from './serviceAreaService';
-export type { WalletService } from './walletService';

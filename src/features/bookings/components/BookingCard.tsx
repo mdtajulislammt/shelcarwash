@@ -22,19 +22,19 @@ export function BookingCard({ booking: bk, isSelected, onSelect, onCancel }: Boo
       onClick={onSelect}
       className={`p-5 rounded-2xl border transition-all cursor-pointer space-y-4 ${
         isSelected
-          ? 'bg-gradient-to-r from-lime-950/90 via-[#3a3a3a] to-lime-900/80 border-yellow-300 ring-1 ring-yellow-300/40 shadow-md shadow-yellow-300/20'
-          : 'bg-[#3a3a3a]/80 hover:bg-[#4a4a4a] border-zinc-700'
+          ? 'bg-gradient-to-r from-lime-950/90 via-card to-lime-900/80 border-brand ring-1 ring-brand/40 shadow-md shadow-brand/20'
+          : 'bg-card/80 hover:bg-card-hover border-zinc-700'
       }`}
     >
       <div className="flex justify-between items-start gap-3">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-bold text-yellow-400">{bk.service.name}</span>
+            <span className="text-xs font-bold text-brand">{bk.service.name}</span>
             <span className="text-[10px] px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 border border-zinc-700">
               {bk.vehicleCategory.toUpperCase()}
             </span>
             {bk.isRecurring && (
-              <span className="text-[10px] px-2 py-0.5 rounded-full font-extrabold bg-gradient-to-r from-slate-200 via-zinc-300 to-slate-400 text-black border border-white/80 capitalize">
+              <span className="text-[10px] px-2 py-0.5 rounded-full font-extrabold bg-gradient-to-r from-slate-200 via-zinc-300 to-slate-400 text-ink border border-white/80 capitalize">
                 Reoccurring Cleanings{bk.recurringFrequency ? ` • ${bk.recurringFrequency}` : ''}
               </span>
             )}
@@ -51,7 +51,7 @@ export function BookingCard({ booking: bk, isSelected, onSelect, onCancel }: Boo
           <span className="text-lg font-black text-white">{formatCurrency(bk.totalPrice)}</span>
           <div
             className={`flex items-center justify-end space-x-1 text-[10px] font-bold mt-0.5 ${
-              isPaid ? 'text-lime-400' : 'text-yellow-300'
+              isPaid ? 'text-lime-400' : 'text-brand'
             }`}
           >
             {isPaid ? <CheckCircle2 className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
@@ -60,7 +60,7 @@ export function BookingCard({ booking: bk, isSelected, onSelect, onCancel }: Boo
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-2 p-3 rounded-xl bg-[#050505] text-xs border border-zinc-800">
+      <div className="grid grid-cols-2 gap-2 p-3 rounded-xl bg-page text-xs border border-zinc-800">
         <div>
           <span className="text-[10px] text-zinc-400 font-semibold block uppercase">
             Scheduled Time
@@ -73,7 +73,7 @@ export function BookingCard({ booking: bk, isSelected, onSelect, onCancel }: Boo
           <span className="text-[10px] text-zinc-400 font-semibold block uppercase">
             Payment Method
           </span>
-          <span className="font-bold text-yellow-400">
+          <span className="font-bold text-brand">
             {getPaymentMethodOption(bk.paymentMethod).title}
           </span>
         </div>
@@ -109,7 +109,7 @@ export function BookingCard({ booking: bk, isSelected, onSelect, onCancel }: Boo
               disabled={!eligibility.allowed}
               aria-label="Cancel appointment"
               title={eligibility.allowed ? 'Cancel Appointment' : (eligibility.reason ?? undefined)}
-              className="p-1.5 min-h-11 min-w-11 flex items-center justify-center rounded-lg bg-[#3a3a3a] hover:bg-rose-950 text-zinc-300 hover:text-rose-300 transition-colors border border-zinc-600 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-[#3a3a3a] disabled:hover:text-zinc-300"
+              className="p-1.5 min-h-11 min-w-11 flex items-center justify-center rounded-lg bg-card hover:bg-rose-950 text-zinc-300 hover:text-rose-300 transition-colors border border-zinc-600 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-card disabled:hover:text-zinc-300"
             >
               <Trash2 className="w-4 h-4" />
             </button>

@@ -20,15 +20,15 @@ export function BookingDetailsPanel({
   const isCancelled = booking.status === 'cancelled';
 
   return (
-    <div className="bg-gradient-to-b from-[#18181c] via-[#121216] to-[#18181c] p-6 rounded-3xl border border-yellow-300/40 shadow-2xl space-y-5 text-white">
+    <div className="bg-gradient-to-b from-surface-4 via-surface-3 to-surface-4 p-6 rounded-3xl border border-brand/40 shadow-2xl space-y-5 text-white">
       <div className="flex justify-between items-start gap-2 border-b border-zinc-800 pb-4">
         <div className="flex items-center space-x-2">
-          <div className="w-8 h-8 shrink-0 rounded-xl bg-gradient-to-tr from-yellow-300 to-lime-400 flex items-center justify-center font-black text-black text-xs">
+          <div className="w-8 h-8 shrink-0 rounded-xl bg-brand flex items-center justify-center font-black text-ink text-xs">
             CC
           </div>
           <div>
             <h4 className="text-sm font-extrabold text-white">Constant Clean Detailing</h4>
-            <p className="text-[10px] text-yellow-300 font-bold">Booking Confirmation</p>
+            <p className="text-[10px] text-brand font-bold">Booking Confirmation</p>
           </div>
         </div>
         <PaymentStatusBadge status={booking.paymentStatus} />
@@ -42,7 +42,7 @@ export function BookingDetailsPanel({
           <h3 className="text-xl font-extrabold text-white">{booking.service.name}</h3>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 text-xs p-3 rounded-xl bg-[#050505] border border-zinc-800">
+        <div className="grid grid-cols-2 gap-3 text-xs p-3 rounded-xl bg-page border border-zinc-800">
           <div>
             <span className="text-[10px] text-zinc-400 font-bold uppercase block">Vehicle</span>
             <span className="font-bold text-zinc-200">
@@ -52,7 +52,7 @@ export function BookingDetailsPanel({
           </div>
           <div>
             <span className="text-[10px] text-zinc-400 font-bold uppercase block">Appointment</span>
-            <span className="font-bold text-yellow-400">{formatDateString(booking.date)}</span>
+            <span className="font-bold text-brand">{formatDateString(booking.date)}</span>
             <span className="block text-[10px] text-zinc-300">
               @ {formatSlotLabel(booking.slotId)}
             </span>
@@ -67,7 +67,7 @@ export function BookingDetailsPanel({
           <div className="flex justify-between gap-3">
             <span className="text-zinc-400">Total ({method.title}):</span>
             <span
-              className={`font-bold ${booking.paymentStatus === 'paid' ? 'text-lime-400' : 'text-yellow-300'}`}
+              className={`font-bold ${booking.paymentStatus === 'paid' ? 'text-lime-400' : 'text-brand'}`}
             >
               {formatCurrency(booking.totalPrice)}
             </span>
@@ -84,18 +84,18 @@ export function BookingDetailsPanel({
       </div>
 
       {booking.paymentStatus === 'pending' && method.handle && !isCancelled && (
-        <div className="p-3 rounded-xl bg-[#050505] border border-yellow-300/30 text-[11px] text-zinc-300 flex items-start space-x-2">
-          <Info className="w-4 h-4 text-yellow-300 shrink-0 mt-0.5" />
+        <div className="p-3 rounded-xl bg-page border border-brand/30 text-[11px] text-zinc-300 flex items-start space-x-2">
+          <Info className="w-4 h-4 text-brand shrink-0 mt-0.5" />
           <p>
             Send {formatCurrency(booking.totalPrice)} via {method.title} to{' '}
-            <strong className="text-yellow-300 font-mono">{method.handle}</strong> with memo{' '}
+            <strong className="text-brand font-mono">{method.handle}</strong> with memo{' '}
             <strong className="font-mono text-white">{booking.id}</strong>.
           </p>
         </div>
       )}
 
-      <div className="p-4 rounded-2xl bg-white text-black text-center space-y-2">
-        <Award className="w-16 h-16 mx-auto text-black" />
+      <div className="p-4 rounded-2xl bg-white text-ink text-center space-y-2">
+        <Award className="w-16 h-16 mx-auto text-ink" />
         <p className="text-[10px] font-mono font-bold tracking-widest uppercase">
           BOOKING-ID: {booking.id}
         </p>
@@ -111,7 +111,7 @@ export function BookingDetailsPanel({
             type="button"
             onClick={onCancel}
             disabled={!eligibility.allowed}
-            className="w-full py-2.5 min-h-11 rounded-xl bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white font-semibold text-xs flex items-center justify-center space-x-2 border border-zinc-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#3a3a3a]"
+            className="w-full py-2.5 min-h-11 rounded-xl bg-card hover:bg-card-hover text-white font-semibold text-xs flex items-center justify-center space-x-2 border border-zinc-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-card"
           >
             <CalendarCheck className="w-4 h-4 text-lime-400" />
             <span>{eligibility.allowed ? 'Cancel Appointment' : eligibility.reason}</span>

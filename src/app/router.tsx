@@ -6,7 +6,6 @@ import { GalleryPage } from '@/pages/GalleryPage';
 import { HomePage } from '@/pages/HomePage';
 import { MyBookingsPage } from '@/pages/MyBookingsPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
-import { PassesPage } from '@/pages/PassesPage';
 import { PrivacyPage } from '@/pages/PrivacyPage';
 import { TermsPage } from '@/pages/TermsPage';
 import { RootLayout } from './RootLayout';
@@ -22,7 +21,6 @@ export const router = createBrowserRouter([
           { path: 'book', element: <BookingPage /> },
           { path: 'gallery', element: <GalleryPage /> },
           { path: 'bookings', element: <MyBookingsPage /> },
-          { path: 'passes', element: <PassesPage /> },
           { path: 'account', element: <AccountPage /> },
           { path: 'privacy', element: <PrivacyPage /> },
           { path: 'terms', element: <TermsPage /> },

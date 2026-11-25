@@ -11,7 +11,7 @@ interface BookingListProps {
   onChangeLookup: () => void;
 }
 
-const TAB_ACTIVE = 'bg-[#505050] text-white font-extrabold border border-zinc-400 shadow-sm';
+const TAB_ACTIVE = 'bg-card-hover text-white font-extrabold border border-zinc-400 shadow-sm';
 const TAB_IDLE = 'text-zinc-300 hover:text-white';
 
 export function BookingList({
@@ -30,7 +30,7 @@ export function BookingList({
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-800 pb-3">
         <div
-          className="flex space-x-2 text-xs font-bold p-1 bg-[#3a3a3a] rounded-xl border border-zinc-600/80"
+          className="flex space-x-2 text-xs font-bold p-1 bg-card rounded-xl border border-zinc-600/80"
           role="tablist"
         >
           <button
@@ -57,7 +57,7 @@ export function BookingList({
           <button
             type="button"
             onClick={onChangeLookup}
-            className="py-3 text-yellow-300 hover:text-yellow-200 font-bold"
+            className="py-3 text-brand hover:text-brand font-bold"
           >
             Change
           </button>
@@ -66,7 +66,7 @@ export function BookingList({
 
       <div className="space-y-4">
         {displayed.length === 0 && (
-          <div className="p-6 rounded-2xl bg-[#0f0f13] border border-zinc-800 text-center text-zinc-400 text-xs">
+          <div className="p-6 rounded-2xl bg-surface-2 border border-zinc-800 text-center text-zinc-400 text-xs">
             No active bookings. Check the History tab for past and cancelled appointments.
           </div>
         )}

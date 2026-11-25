@@ -7,7 +7,7 @@ interface HeroProps {
 
 export function Hero({ onStartBooking, onExploreServices }: HeroProps) {
   return (
-    <div className="relative w-full overflow-hidden bg-[#050505] text-white pt-10 pb-20 lg:pt-16 lg:pb-28">
+    <div className="relative w-full overflow-hidden bg-page text-white pt-10 pb-20 lg:pt-16 lg:pb-28">
       {/* Full-bleed background detailing image with black blur overlay */}
       <div className="absolute inset-0 z-0">
         <img
@@ -17,20 +17,20 @@ export function Hero({ onStartBooking, onExploreServices }: HeroProps) {
           referrerPolicy="no-referrer"
         />
         {/* Black blur overlay extending across the page */}
-        <div className="absolute inset-0 bg-[#050505]/70 backdrop-blur-md" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/80 via-[#050505]/85 to-[#050505]" />
+        <div className="absolute inset-0 bg-page/70 backdrop-blur-md" />
+        <div className="absolute inset-0 bg-gradient-to-b from-page/80 via-page/85 to-page" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_#050505_80%)]" />
       </div>
 
       {/* Subtle background glow circles */}
-      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-yellow-300/10 rounded-full blur-3xl pointer-events-none z-0" />
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-brand/10 rounded-full blur-3xl pointer-events-none z-0" />
       <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-lime-400/15 rounded-full blur-3xl pointer-events-none z-0" />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
         <div className="space-y-6">
           {/* Top Tag Badges */}
           <div className="inline-flex flex-wrap items-center justify-center gap-2">
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-yellow-300/10 border border-yellow-300/30 text-yellow-300 text-xs font-semibold">
+            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand/10 border border-brand/30 text-brand text-xs font-semibold">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Mobile Detailing & Studio Services</span>
             </div>
@@ -39,7 +39,7 @@ export function Hero({ onStartBooking, onExploreServices }: HeroProps) {
                 {[...Array(5)].map((_, i) => (
                   <div
                     key={i}
-                    className="h-5 sm:h-5.5 w-5 sm:w-5.5 rounded-[3px] bg-[#D32323] flex items-center justify-center shadow-sm shrink-0"
+                    className="h-5 sm:h-5.5 w-5 sm:w-5.5 rounded-[3px] bg-accent-red flex items-center justify-center shadow-sm shrink-0"
                   >
                     <svg className="w-3.5 sm:w-4 h-3.5 sm:h-4 fill-white" viewBox="0 0 24 24">
                       <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
@@ -63,10 +63,8 @@ export function Hero({ onStartBooking, onExploreServices }: HeroProps) {
           {/* Main Heading */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.15]">
             Showroom Shine.{' '}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 via-lime-300 to-lime-400">
-              Scheduled & Paid
-            </span>{' '}
-            In Seconds.
+            <span className="bg-clip-text text-transparent bg-brand">Scheduled & Paid</span> In
+            Seconds.
           </h1>
 
           {/* Subtitle */}
@@ -82,7 +80,7 @@ export function Hero({ onStartBooking, onExploreServices }: HeroProps) {
           {/* Feature Highlights Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl mx-auto pt-2">
             <div className="flex items-center space-x-3 bg-zinc-900/90 p-3 rounded-xl border border-zinc-800">
-              <div className="p-2 rounded-lg bg-yellow-300/10 text-yellow-300">
+              <div className="p-2 rounded-lg bg-brand text-ink">
                 <Calendar className="w-5 h-5" />
               </div>
               <div className="text-left">
@@ -110,15 +108,15 @@ export function Hero({ onStartBooking, onExploreServices }: HeroProps) {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
             <button
               onClick={onStartBooking}
-              className="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-yellow-300 via-lime-300 to-lime-400 hover:from-yellow-200 hover:to-lime-300 text-black font-extrabold text-base shadow-xl shadow-yellow-300/20 hover:shadow-yellow-300/35 transition-all duration-200 flex items-center justify-center space-x-3 group active:scale-95"
+              className="w-full sm:w-auto px-8 py-4 rounded-xl bg-brand hover:bg-brand-2 text-ink font-extrabold text-base shadow-xl shadow-brand/20 hover:shadow-brand/35 transition-all duration-200 flex items-center justify-center space-x-3 group active:scale-95"
             >
-              <Calendar className="w-5 h-5 text-black group-hover:scale-110 transition-transform" />
+              <Calendar className="w-5 h-5 text-ink group-hover:scale-110 transition-transform" />
               <span>Schedule Customer Appointment</span>
             </button>
 
             <button
               onClick={onExploreServices}
-              className="w-full sm:w-auto px-6 py-4 rounded-xl bg-[#3a3a3a] hover:bg-[#4a4a4a] border border-zinc-600 text-white font-semibold text-base transition-all duration-200 flex items-center justify-center space-x-2"
+              className="w-full sm:w-auto px-6 py-4 rounded-xl bg-card hover:bg-card-hover border border-zinc-600 text-white font-semibold text-base transition-all duration-200 flex items-center justify-center space-x-2"
             >
               <span>Explore Packages</span>
             </button>
@@ -127,7 +125,7 @@ export function Hero({ onStartBooking, onExploreServices }: HeroProps) {
           {/* Trust Badges */}
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-zinc-400 pt-2">
             <div className="flex items-center space-x-1.5">
-              <CheckCircle2 className="w-4 h-4 text-yellow-300" />
+              <CheckCircle2 className="w-4 h-4 text-brand" />
               <span>100% mobile(We come to you)</span>
             </div>
             <div className="flex items-center space-x-1.5">

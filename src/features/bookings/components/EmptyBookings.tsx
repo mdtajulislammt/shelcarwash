@@ -12,10 +12,10 @@ export function EmptyBookings({ lookup, onStartNewBooking }: EmptyBookingsProps)
   const searched = lookup?.email ?? lookup?.phone;
 
   return (
-    <div className="bg-[#18181c] rounded-3xl border border-zinc-800 p-6 sm:p-8 space-y-6 shadow-2xl">
+    <div className="bg-surface-4 rounded-3xl border border-zinc-800 p-6 sm:p-8 space-y-6 shadow-2xl">
       <div className="flex items-center space-x-3 border-b border-zinc-800/80 pb-6">
-        <div className="w-12 h-12 shrink-0 rounded-2xl bg-[#0a0a0d] border border-zinc-700 flex items-center justify-center p-2 shadow-lg shadow-yellow-400/10">
-          <CalendarCheck className="w-7 h-7 text-yellow-300" />
+        <div className="w-12 h-12 shrink-0 rounded-2xl bg-surface border border-zinc-700 flex items-center justify-center p-2 shadow-lg shadow-brand/10">
+          <CalendarCheck className="w-7 h-7 text-brand" />
         </div>
         <div>
           <h3 className="text-xl font-extrabold text-white">My Bookings</h3>
@@ -25,7 +25,7 @@ export function EmptyBookings({ lookup, onStartNewBooking }: EmptyBookingsProps)
         </div>
       </div>
 
-      <div className="text-center py-10 px-4 bg-[#0a0a0d] rounded-2xl border border-zinc-800 space-y-4">
+      <div className="text-center py-10 px-4 bg-surface rounded-2xl border border-zinc-800 space-y-4">
         <div className="w-12 h-12 rounded-xl bg-zinc-800 text-zinc-400 flex items-center justify-center mx-auto">
           <Calendar className="w-6 h-6" />
         </div>
@@ -45,9 +45,9 @@ export function EmptyBookings({ lookup, onStartNewBooking }: EmptyBookingsProps)
         </p>
         <Button
           onClick={onStartNewBooking}
-          className="w-full sm:w-auto min-h-11 px-6 py-3 rounded-xl text-xs transition-all shadow-lg shadow-yellow-400/20 flex items-center justify-center space-x-2 shrink-0"
+          className="w-full sm:w-auto min-h-11 px-6 py-3 rounded-xl text-xs transition-all shadow-lg shadow-brand/20 flex items-center justify-center space-x-2 shrink-0"
         >
-          <Calendar className="w-4 h-4 text-black" />
+          <Calendar className="w-4 h-4 text-ink" />
           <span>Schedule Detailing Service</span>
         </Button>
       </div>

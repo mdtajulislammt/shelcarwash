@@ -3,7 +3,8 @@ import { Spinner } from '@/components/ui/Spinner';
 import { useLookupStore } from '@/features/bookings/store/lookupStore';
 import { useAccount } from '../hooks/useAccount';
 import { useDeleteManualEvent } from '../hooks/useAccountData';
-import type { AccountSettings } from '../schemas';
+import type { Profile } from '@/features/profile/schemas';
+import { DEFAULT_ACCOUNT_SETTINGS } from '../schemas';
 import { formatVehicle } from '../utils/profile';
 import { AccountLookup } from './AccountLookup';
 import { AddEventModal } from './AddEventModal';
@@ -17,8 +18,17 @@ import { VerifiedAddressCard } from './VerifiedAddressCard';
 /** Customer profile: contact details, calendar (bookings + personal events), service address. */
 export function MyAccount({ onBook }: { onBook: () => void }) {
   const account = useAccount();
-  const { lookup, profile, bookings, schedule, settings, serviceAddress, isLoading, error } =
-    account;
+  const {
+    lookup,
+    profile,
+    savedProfile,
+    bookings,
+    schedule,
+    settings,
+    serviceAddress,
+    isLoading,
+    error,
+  } = account;
   const clearLookup = useLookupStore((s) => s.clearLookup);
   const deleteEvent = useDeleteManualEvent();
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -47,14 +57,14 @@ export function MyAccount({ onBook }: { onBook: () => void }) {
 
   const lastCustomer = bookings[0]?.customer;
   const lastMobile = bookings.find((b) => b.customer.serviceType === 'mobile')?.customer;
-  const initialSettings: AccountSettings = settings ?? {
+  const initialProfile: Profile = savedProfile ?? {
     fullName: profile.fullName,
+    email: profile.email,
     phone: profile.phone,
     streetAddress: lastMobile?.streetAddress ?? '',
     city: lastMobile?.city ?? '',
+    state: lastMobile?.state ?? 'CA',
     zipCode: lastMobile?.zipCode ?? '',
-    smsReminders: true,
-    emailUpdates: true,
   };
 
   return (
@@ -81,8 +91,8 @@ export function MyAccount({ onBook }: { onBook: () => void }) {
 
       {settingsOpen && (
         <SettingsModal
-          open
-          initial={initialSettings}
+          initialProfile={initialProfile}
+          initialSettings={settings ?? DEFAULT_ACCOUNT_SETTINGS}
           email={profile.email || profile.phone}
           onClose={() => setSettingsOpen(false)}
         />

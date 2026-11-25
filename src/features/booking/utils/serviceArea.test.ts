@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { SERVICE_AREA_ZIPS } from '@/config/site';
+import { createMockServiceAreaService } from '@/services/serviceAreaService';
 import { customerSchema } from '../schemas';
 import { checkServiceArea, isServiceableZip } from './serviceArea';
 
@@ -64,5 +65,17 @@ describe('service area ZIP check', () => {
         streetAddress: '',
       }).success,
     ).toBe(true);
+  });
+});
+
+describe('service-area check through the service layer', () => {
+  it('returns the city for serviceable ZIPs and rejects others', async () => {
+    const service = createMockServiceAreaService({ latencyMs: 0 });
+    expect(await service.checkZip('94526')).toEqual({
+      zip: '94526',
+      serviceable: true,
+      city: 'Danville',
+    });
+    expect(await service.checkZip('90001')).toMatchObject({ serviceable: false, city: null });
   });
 });

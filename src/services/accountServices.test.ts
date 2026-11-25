@@ -1,7 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { createMockAccountService } from './accountService';
 import { createMockAuthService } from './authService';
-import { createMockWalletService } from './walletService';
 
 describe('mock auth service', () => {
   it('signs in with the one-time code only', async () => {
@@ -24,22 +23,11 @@ describe('mock account service', () => {
   beforeEach(() => localStorage.clear());
   const account = createMockAccountService({ latencyMs: 0 });
 
-  it('saves settings per customer and validates the service area', async () => {
-    const settings = {
-      fullName: 'Jane Doe',
-      phone: '(925) 555-0100',
-      streetAddress: '1 Main St',
-      city: 'Dublin',
-      zipCode: '94568',
-      smsReminders: true,
-      emailUpdates: false,
-    };
+  it('saves notification settings per customer', async () => {
+    const settings = { smsReminders: false, emailUpdates: true };
     await account.updateSettings('jane@example.com', settings);
     expect(await account.getSettings('jane@example.com')).toEqual(settings);
     expect(await account.getSettings('other@example.com')).toBeNull();
-    await expect(
-      account.updateSettings('jane@example.com', { ...settings, zipCode: '90001' }),
-    ).rejects.toThrow();
   });
 
   it('adds and deletes manual events', async () => {
@@ -55,13 +43,5 @@ describe('mock account service', () => {
     expect(await account.listEvents('jane@example.com')).toHaveLength(1);
     await account.deleteEvent('jane@example.com', ev.id);
     expect(await account.listEvents('jane@example.com')).toHaveLength(0);
-  });
-});
-
-describe('mock wallet service', () => {
-  it('has no save link without the backend', async () => {
-    expect(await createMockWalletService({ latencyMs: 0 }).createSaveLink(['p1'])).toEqual({
-      saveUrl: null,
-    });
   });
 });

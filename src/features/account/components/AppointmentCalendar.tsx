@@ -22,11 +22,11 @@ export function AppointmentCalendar({ schedule, onBook }: AppointmentCalendarPro
   const selected = schedule.find((i) => i.date === selectedIso) ?? schedule[0];
 
   return (
-    <div className="bg-[#18181c] border border-zinc-800 rounded-2xl p-5 space-y-4 shadow-xl flex flex-col justify-between">
+    <div className="bg-surface-4 border border-zinc-800 rounded-2xl p-5 space-y-4 shadow-xl flex flex-col justify-between">
       <div className="space-y-3">
         <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
           <div className="flex items-center space-x-2">
-            <CalendarIcon className="w-4 h-4 text-yellow-400" />
+            <CalendarIcon className="w-4 h-4 text-brand" />
             <h3 className="text-sm font-extrabold text-white whitespace-nowrap">My Calendar</h3>
           </div>
           <div className="flex items-center space-x-1 text-xs">
@@ -52,7 +52,7 @@ export function AppointmentCalendar({ schedule, onBook }: AppointmentCalendarPro
           </div>
         </div>
 
-        <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-extrabold text-yellow-400 uppercase">
+        <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-extrabold text-brand uppercase">
           {WEEKDAYS.map((d) => (
             <span key={d}>{d}</span>
           ))}
@@ -78,14 +78,14 @@ export function AppointmentCalendar({ schedule, onBook }: AppointmentCalendarPro
                 onClick={() => setSelectedIso(cell.iso)}
                 className={`p-1.5 text-center rounded-lg font-bold transition-all relative disabled:cursor-default ${
                   hasAppt
-                    ? `bg-gradient-to-r from-lime-950/40 via-[#0a0a0d] to-lime-950/40 text-white font-extrabold border-2 shadow-sm shadow-yellow-400/20 ${isSelected ? 'border-yellow-400' : 'border-yellow-400/50'}`
+                    ? `bg-gradient-to-r from-lime-950/40 via-surface to-lime-950/40 text-white font-extrabold border-2 shadow-sm shadow-brand/20 ${isSelected ? 'border-brand' : 'border-brand/50'}`
                     : 'text-lime-400'
                 }`}
               >
                 <span className={hasAppt ? 'text-white font-black' : ''}>{cell.day}</span>
                 {hasAppt && (
                   <span
-                    className={`absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full ${manualDates.has(cell.iso) ? 'bg-lime-400' : 'bg-yellow-400'}`}
+                    className={`absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full ${manualDates.has(cell.iso) ? 'bg-lime-400' : 'bg-brand'}`}
                   />
                 )}
               </button>
@@ -111,7 +111,7 @@ export function AppointmentCalendar({ schedule, onBook }: AppointmentCalendarPro
             onClick={() =>
               downloadIcs('constant-clean-schedule.ics', schedule.map(toCalendarEntry))
             }
-            className="relative text-lime-400 hover:text-lime-300 font-semibold flex items-center space-x-1 after:absolute after:-inset-3 after:content-['']"
+            className="relative text-brand hover:text-brand-2 font-semibold flex items-center space-x-1 after:absolute after:-inset-3 after:content-['']"
           >
             <Download className="w-3.5 h-3.5" />
             <span>Sync All ({schedule.length})</span>

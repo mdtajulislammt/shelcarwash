@@ -8,7 +8,7 @@ export interface CancelEligibility {
 }
 
 /**
- * Free cancellation is allowed until 24h before the appointment start (LA time).
+ * Cancellation is allowed until 24h before the appointment start (LA time).
  * The backend enforces the same rule; this is for UI state only.
  */
 export function getCancelEligibility(

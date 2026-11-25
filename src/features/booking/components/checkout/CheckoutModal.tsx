@@ -3,6 +3,7 @@ import { AlertCircle, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Modal } from '@/components/ui/Modal';
 import { Spinner } from '@/components/ui/Spinner';
+import { CANCELLATION_POLICY } from '@/config/site';
 import { formatCurrency } from '@/lib/format';
 import type { Booking, PaymentMethod } from '@/types';
 import { useBookingSelection } from '../../hooks/useBookingSelection';
@@ -63,8 +64,8 @@ export function CheckoutModal({ open, onClose, onDone }: CheckoutModalProps) {
       ) : (
         <div className="space-y-6">
           <div className="flex items-center space-x-3 pr-12">
-            <div className="w-12 h-12 rounded-2xl bg-[#0a0a0d] border border-zinc-700 flex items-center justify-center p-2 shadow-lg shadow-yellow-300/10 shrink-0">
-              <Lock className="w-6 h-6 text-yellow-300" />
+            <div className="w-12 h-12 rounded-2xl bg-surface border border-zinc-700 flex items-center justify-center p-2 shadow-lg shadow-brand/10 shrink-0">
+              <Lock className="w-6 h-6 text-brand" />
             </div>
             <div>
               <h3 id="checkout-title" className="text-xl font-extrabold text-white">
@@ -124,7 +125,7 @@ export function CheckoutModal({ open, onClose, onDone }: CheckoutModalProps) {
 
           <div className="flex items-center justify-center space-x-2 text-[11px] text-zinc-400">
             <Lock className="w-3.5 h-3.5 text-lime-400 shrink-0" />
-            <span>Every service is prepaid. Free cancellation up to 24 hours before.</span>
+            <span>{CANCELLATION_POLICY.short}</span>
           </div>
         </div>
       )}

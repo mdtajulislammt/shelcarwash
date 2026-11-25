@@ -17,6 +17,31 @@ import { isServiceableZip } from './utils/serviceArea';
  * services and the HTTP services (response validation). Mirrors docs/API_CONTRACT.md.
  */
 
+/** Mobile service address rules (shared by bookings and the saved profile). */
+export function addServiceAddressIssues(
+  a: { streetAddress: string; city: string; state: string; zipCode: string },
+  ctx: z.RefinementCtx,
+): void {
+  if (!a.streetAddress) {
+    ctx.addIssue({
+      code: 'custom',
+      path: ['streetAddress'],
+      message: 'Address is required for mobile detailing',
+    });
+  }
+  if (!(SERVICE_AREA_CITIES as readonly string[]).includes(a.city)) {
+    ctx.addIssue({ code: 'custom', path: ['city'], message: 'Select a city in our service area' });
+  }
+  if (a.state.toUpperCase() !== 'CA') {
+    ctx.addIssue({ code: 'custom', path: ['state'], message: 'We only service California (CA)' });
+  }
+  if (!a.zipCode) {
+    ctx.addIssue({ code: 'custom', path: ['zipCode'], message: 'ZIP code is required' });
+  } else if (!isServiceableZip(a.zipCode)) {
+    ctx.addIssue({ code: 'custom', path: ['zipCode'], message: SERVICE_AREA_ERROR });
+  }
+}
+
 const isoDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Expected YYYY-MM-DD');
 const slotIds = TIME_SLOTS.map((s) => s.id) as [string, ...string[]];
 
@@ -32,6 +57,8 @@ export const customerSchema = z
     serviceType: z.enum(SERVICE_TYPES),
     streetAddress: z.string().trim(),
     city: z.string().trim(),
+    /** Two-letter state; older bookings without it are California. */
+    state: z.string().trim().default('CA'),
     zipCode: z.string().trim(),
     vehicleMake: z.string().trim().min(1, 'Make is required'),
     vehicleModel: z.string().trim().min(1, 'Model is required'),
@@ -41,26 +68,7 @@ export const customerSchema = z
     specialNotes: z.string().trim().optional(),
   })
   .superRefine((c, ctx) => {
-    if (c.serviceType !== 'mobile') return;
-    if (!c.streetAddress) {
-      ctx.addIssue({
-        code: 'custom',
-        path: ['streetAddress'],
-        message: 'Address is required for mobile detailing',
-      });
-    }
-    if (!(SERVICE_AREA_CITIES as readonly string[]).includes(c.city)) {
-      ctx.addIssue({
-        code: 'custom',
-        path: ['city'],
-        message: 'Select a city in our service area',
-      });
-    }
-    if (!c.zipCode) {
-      ctx.addIssue({ code: 'custom', path: ['zipCode'], message: 'ZIP code is required' });
-    } else if (!isServiceableZip(c.zipCode)) {
-      ctx.addIssue({ code: 'custom', path: ['zipCode'], message: SERVICE_AREA_ERROR });
-    }
+    if (c.serviceType === 'mobile') addServiceAddressIssues(c, ctx);
   });
 
 export type Customer = z.infer<typeof customerSchema>;

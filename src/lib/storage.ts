@@ -3,6 +3,7 @@ export const STORAGE_KEYS = {
   bookings: 'cc_bookings_v1',
   customerLookup: 'cc_customer_lookup_v1',
   account: 'cc_account_v1',
+  profile: 'cc_profile_v1',
 } as const;
 
 /** Safe JSON read: returns `fallback` when storage is unavailable or the value is corrupt. */

@@ -20,7 +20,7 @@ export function Confirmation({ booking, onDone }: { booking: Booking; onDone: ()
 
       <div>
         <span
-          className={`text-xs font-bold uppercase tracking-widest ${isPaid ? 'text-lime-400' : 'text-yellow-300'}`}
+          className={`text-xs font-bold uppercase tracking-widest ${isPaid ? 'text-lime-400' : 'text-brand'}`}
         >
           {isPaid ? 'Payment Authorized & Confirmed' : 'Booking Received • Pending Payment'}
         </span>
@@ -28,11 +28,11 @@ export function Confirmation({ booking, onDone }: { booking: Booking; onDone: ()
           Your Appointment Is Scheduled!
         </h3>
         <p className="text-xs text-zinc-300 mt-1">
-          Booking ID: <span className="font-mono text-yellow-300">{booking.id}</span>
+          Booking ID: <span className="font-mono text-brand">{booking.id}</span>
         </p>
       </div>
 
-      <div className="p-5 rounded-2xl bg-gradient-to-br from-[#18181c] via-[#121216] to-[#18181c] border border-yellow-300/40 text-left space-y-3">
+      <div className="p-5 rounded-2xl bg-gradient-to-br from-surface-4 via-surface-3 to-surface-4 border border-brand/40 text-left space-y-3">
         <div className="flex justify-between items-center gap-2 border-b border-zinc-800 pb-2">
           <div className="flex items-center space-x-2">
             <CalendarCheck className="w-4 h-4 text-lime-400" />
@@ -46,7 +46,7 @@ export function Confirmation({ booking, onDone }: { booking: Booking; onDone: ()
           <p className="text-zinc-400">
             {c.vehicleYear} {c.vehicleMake} {c.vehicleModel} ({c.licensePlate})
           </p>
-          <p className="text-yellow-300 font-bold">
+          <p className="text-brand font-bold">
             {formatDateString(booking.date)} @ {formatSlotLabel(booking.slotId)}
           </p>
           <p className="text-zinc-400">
@@ -56,17 +56,17 @@ export function Confirmation({ booking, onDone }: { booking: Booking; onDone: ()
 
         {!isPaid && method.handle && (
           <div className="pt-2 border-t border-zinc-800/80 text-[11px] text-zinc-300 flex items-start space-x-2">
-            <Info className="w-4 h-4 text-yellow-300 shrink-0 mt-0.5" />
+            <Info className="w-4 h-4 text-brand shrink-0 mt-0.5" />
             <p>
               Send {formatCurrency(booking.totalPrice)} via {method.title} to{' '}
-              <strong className="text-yellow-300 font-mono">{method.handle}</strong> with memo{' '}
+              <strong className="text-brand font-mono">{method.handle}</strong> with memo{' '}
               <strong className="font-mono text-white">{booking.id}</strong>.
             </p>
           </div>
         )}
       </div>
 
-      <div className="p-4 rounded-2xl bg-[#050505] border border-zinc-800 text-left space-y-2 text-xs text-zinc-300">
+      <div className="p-4 rounded-2xl bg-page border border-zinc-800 text-left space-y-2 text-xs text-zinc-300">
         <p>
           Booking confirmation for <strong className="text-white">{c.email}</strong>.
         </p>
@@ -77,7 +77,7 @@ export function Confirmation({ booking, onDone }: { booking: Booking; onDone: ()
 
       <Button
         onClick={onDone}
-        className="w-full py-3.5 rounded-2xl text-sm shadow-lg shadow-yellow-300/20 transition-all"
+        className="w-full py-3.5 rounded-2xl text-sm shadow-lg shadow-brand/20 transition-all"
       >
         Done & View My Bookings
       </Button>

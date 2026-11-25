@@ -1,7 +1,9 @@
-/** Selected / idle card treatments from the original design. */
-export const SELECTED_CARD =
-  'bg-gradient-to-r from-lime-950/90 via-[#3a3a3a] to-lime-900/80 border-yellow-300';
-export const IDLE_CARD = 'bg-[#3a3a3a] hover:bg-[#4a4a4a] border-zinc-700';
+/**
+ * Selectable card (vehicle, package, add-on, slot, date, frequency…). Styling lives in
+ * `.select-card` (styles/index.css) and switches to the yellow gradient via aria-checked /
+ * aria-pressed, so the selected state is always the accessible state.
+ */
+export const SELECT_CARD = 'select-card';
 
 /** Keyboard support for clickable cards (Enter / Space). */
 export function onActivateKey(action: () => void) {

@@ -13,5 +13,5 @@ export const endpoints = {
   accountSettings: '/api/me/settings',
   accountEvents: '/api/me/events',
   accountEvent: (id: string) => `/api/me/events/${encodeURIComponent(id)}`,
-  walletSaveLink: '/api/wallet/save-link',
+  profile: '/api/me/profile',
 } as const;

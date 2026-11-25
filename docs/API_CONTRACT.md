@@ -146,6 +146,7 @@ Request (`CreateBookingRequest`):
     "serviceType": "mobile",
     "streetAddress": "1 Main St",
     "city": "Dublin",
+    "state": "CA",
     "zipCode": "94568",
     "vehicleMake": "Porsche",
     "vehicleModel": "911",
@@ -159,7 +160,7 @@ Request (`CreateBookingRequest`):
 
 - `paymentMethod` ∈ `card | google_pay | zelle | venmo`.
 - `recurringFrequency` ∈ `weekly | bi-weekly | monthly | null`; ignored unless the package category is `maintenance`.
-- For `serviceType: "mobile"`, `streetAddress`, `city` (service-area city) and `zipCode` (service-area ZIP) are required.
+- For `serviceType: "mobile"`, `streetAddress`, `city` (service-area city), `state` (`CA`) and `zipCode` (service-area ZIP) are required. `state` defaults to `CA` when missing.
 
 Server responsibilities: validate, re-check the slot (409 if taken), compute price
 **server-side** (`Math.round(basePrice × vehicleMultiplier) + Σ addOn.price`), store, send the
@@ -222,7 +223,8 @@ No body. Returns the updated `Booking` (`status: "cancelled"`, `cancelledAt` set
 
 The **backend enforces the 24-hour rule**: if the appointment start (`date` + `slotId`, LA time) is
 less than 24 hours away → `409 CANCELLATION_WINDOW_CLOSED`. Already cancelled / started /
-completed → `409`. Paid bookings should be refunded by the backend.
+completed → `409`. Payments are **non-refundable** (re-service guarantee instead), so cancelling does
+not refund; `paymentStatus` stays as it was.
 
 ## POST /api/payments/intent
 
@@ -284,19 +286,30 @@ Request: `{ "credential": "<Google ID token>" }` from Google Identity Services
 ### GET /api/me/settings · PUT /api/me/settings
 
 ```json
+{ "smsReminders": true, "emailUpdates": true }
+```
+
+`GET` returns `null` until saved once.
+
+### GET /api/me/profile · PUT /api/me/profile · DELETE /api/me/profile
+
+Saved customer profile — pre-fills the booking form. Guests keep it on the device only
+(localStorage `cc_profile_v1`); signed-in customers also sync it here.
+
+```json
 {
   "fullName": "Jane Doe",
+  "email": "jane@example.com",
   "phone": "(925) 555-0100",
-  "streetAddress": "1 Main St",
+  "streetAddress": "7000 Village Pkwy",
   "city": "Dublin",
-  "zipCode": "94568",
-  "smsReminders": true,
-  "emailUpdates": true
+  "state": "CA",
+  "zipCode": "94568"
 }
 ```
 
-`GET` returns `null` until saved once. Address fields are all empty, or a full service-area address
-(same city/ZIP rules as bookings → `422 OUT_OF_AREA`). Used to pre-fill the booking form.
+`GET` returns `null` if none. `email` may be `""`. Address fields are all empty, or a full
+service-area address (same rules as bookings → `422 OUT_OF_AREA`). `DELETE` → `204`.
 
 ### GET /api/me/events · POST /api/me/events · DELETE /api/me/events/:id
 
@@ -321,13 +334,15 @@ Personal calendar entries ("Add Manual Event"). They do **not** reserve a slot.
 Calendar sync needs no endpoint: the browser builds "Add to Google Calendar" links and `.ics`
 files (`src/lib/calendarExport.ts`).
 
-## POST /api/wallet/save-link (requires auth)
+## Google Wallet (planned)
 
-Request: `{ "passIds": ["booking-CC-…", "cert-CC-…"] }` (ids from the Passes page:
-`booking-<bookingId>`, `plan-<bookingId>`, `cert-<bookingId>`).
+The payment step shows a "Connect to Google Wallet" button that only displays "coming soon" for
+now. Backend phase: the server creates the pass with its Google Wallet API issuer account
+(service-account key, never in the browser) and returns a signed `https://pay.google.com/gp/v/save/…`
+link for the browser to open.
 
-Response: `{ "saveUrl": "https://pay.google.com/gp/v/save/<signed JWT>" }`
+## Google Maps key
 
-The server creates/updates the Google Wallet pass objects with its issuer account (Google Wallet
-API, service-account key — never in the browser) and returns the signed save link. The browser
-opens it; Google shows its own "Save to Wallet" screen.
+Address autocomplete runs in the browser with `VITE_GOOGLE_MAPS_API_KEY` (Maps JavaScript API +
+Places API (New)). No backend endpoint is involved. Restrict the key to the site's HTTP referrers;
+the ZIP is always re-checked with `POST /api/service-area/check` and on booking creation.

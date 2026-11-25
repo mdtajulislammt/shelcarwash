@@ -12,8 +12,7 @@
 ```
 src/
   app/          App.tsx, router.tsx, providers.tsx (QueryClient), RootLayout, ScrollToTop
-  pages/        Route components: Home, Booking, Gallery, MyBookings, Passes, Account, Privacy, Terms,
-                NotFound
+  pages/        Route components: Home, Booking, Gallery, MyBookings, Account, Privacy, Terms, NotFound
   features/
     booking/    Booking flow (vehicle → package → add-ons → schedule → details → checkout)
       components/          VehicleSelector, PackageSelector, AddOns, Recurring, Scheduler,
@@ -26,13 +25,15 @@ src/
     bookings/   "My Bookings": list, details, cancel (useBookings, useCancelBooking, lookupStore)
     account/    "My Account" (/account): profile header, appointment calendar, service-location
                 map, upcoming appointments, verified address. Derived from the customer's bookings
-                (useAccount); backend phase → authenticated GET /api/me. Settings modal
-                (contact, default address, notifications), Add Manual Event, calendar sync
-                (Google Calendar link / .ics via lib/calendarExport.ts).
-                "My Passes" (/passes): wallet-card style booking passes, maintenance plans and
-                service certificates built from bookings (utils/passes.ts). Backend phase: issue
-                them as Google Wallet passes via the Google Wallet API (issuer-side only) —
-                WalletModal asks POST /api/wallet/save-link and opens the returned URL.
+                + saved profile (useAccount). Settings modal (profile fields + notifications),
+                Add Manual Event, calendar sync (Google Calendar link / .ics via
+                lib/calendarExport.ts).
+    profile/    Saved customer profile (name, phone, email, service address). zustand persisted
+                store (localStorage "cc_profile_v1") behind services/profileService; hooks
+                useProfile / useSaveProfile / useClearProfile / useProfileForm /
+                usePrefillFromProfile. Saved automatically after each booking (useCreateBooking),
+                pre-fills the next booking ("Using your saved profile" + Edit), and can be
+                viewed / edited / cleared on My Bookings (ProfileSection).
     auth/       Passwordless sign-in: SignInForm (email/SMS one-time code) + GoogleSignInButton
                 (Google Identity Services, shown when VITE_GOOGLE_CLIENT_ID is set). Session
                 (contact + token) lives in bookings/store/lookupStore and is sent as Bearer token.
@@ -40,15 +41,17 @@ src/
     marketing/  Hero
   components/
     layout/     AppLayout, Navbar, MobileDock, Footer, Container, LegalPage
-    ui/         Button, Card, Badge, Input, Select, Modal, Spinner (original classes)
+    ui/         Button, Card, Badge, Input, Select, Modal, Toast, Spinner,
+                AddressAutocompleteInput (Google Places)
   config/       site.ts (business config), env.ts (validated import.meta.env)
   data/         services.ts (catalog), gallery.ts
-  lib/          api/{client, endpoints, queryKeys}, dates.ts (LA time), format.ts, storage.ts
+  lib/          api/{client, endpoints, queryKeys}, dates.ts (LA time), format.ts, storage.ts,
+                googleMaps.ts (lazy Places loader + address parsing), calendarExport.ts
   services/     catalog / availability / serviceArea / booking / payment / auth / account /
-                wallet services
+                profile services
                 (interface + mock + http), index.ts picks the implementation
   types/        Shared domain types
-  styles/       index.css (theme tokens)
+  styles/       index.css (brand tokens, .select-card)
   test/         Vitest setup
 ```
 
@@ -82,6 +85,30 @@ Component ──► hook (TanStack Query) ──► service interface ──► 
    Zelle/Venmo stay "Pending payment".
 4. Confirmation → `/bookings`. The customer's email/phone is remembered (`lookupStore`) so
    My Bookings can query `GET /bookings?email=`.
+
+### Theme
+
+`src/styles/index.css` defines the brand tokens (Tailwind v4 `@theme`): `card` #4B4B4B,
+`card-hover` #555555, `brand` #F4F015, `brand-2` #D9D50F, `accent-red` #F15543, `ink` #20201F,
+`muted` #E5E5E5, plus dark `page` / `surface-*` backgrounds. Components use token classes only.
+`.select-card` styles every selectable card (gray card, 12px radius, card shadow) and switches to
+the yellow gradient with ink text when `aria-checked`/`aria-pressed` is true; children use
+`text-card-fg`, `text-card-muted`, `text-card-accent`, `bg-card-chip` so they flip with it. Focus
+ring = brand yellow (`:focus-visible`). Active nav item = 2px `accent-red` underline.
+
+### Summary bar
+
+`BookingSummaryBar` is `position: sticky; bottom: 6rem` inside the services section, so it stays
+visible while choosing vehicle, package and add-ons and comes to rest after the last step (never
+over the footer). The layout root uses `overflow-x: clip` (not `hidden`) so sticky keeps working.
+
+### Address autocomplete
+
+`AddressAutocompleteInput` lazy-loads the Maps JS API (`lib/googleMaps.ts`, key
+`VITE_GOOGLE_MAPS_API_KEY`) on first focus and uses Places API (New)
+`AutocompleteSuggestion` (US only, biased to the Tri-Valley). Choosing a suggestion fills street,
+city, state and ZIP and runs the service-area check through `serviceAreaService`. No key, a script
+error or an API error → it stays a plain input.
 
 ### Business rules (where they live)
 

@@ -34,4 +34,6 @@ export interface AccountProfile {
   fullName: string;
   email: string;
   phone: string;
+  /** False when fullName is only a fallback (email prefix / "Customer"), not a name the customer gave. */
+  hasName: boolean;
 }

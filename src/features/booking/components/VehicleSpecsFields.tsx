@@ -17,7 +17,7 @@ export function VehicleSpecsFields({ errors, onChange }: FieldsProps) {
   return (
     <div className="space-y-4 border-t border-zinc-800 pt-6">
       <h3 className="text-base font-bold text-white flex items-center space-x-2">
-        <Car className="w-4 h-4 text-yellow-300" />
+        <Car className="w-4 h-4 text-brand" />
         <span>3. Vehicle Specifications</span>
       </h3>
 

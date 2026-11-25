@@ -10,4 +10,6 @@ export const queryKeys = {
   bookingsAll: ['bookings'] as const,
   accountSettings: (contact: string) => ['account', 'settings', contact] as const,
   accountEvents: (contact: string) => ['account', 'events', contact] as const,
+  profile: (signedIn: boolean) => ['profile', signedIn] as const,
+  profileAll: ['profile'] as const,
 };

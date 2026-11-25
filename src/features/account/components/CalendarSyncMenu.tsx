@@ -8,11 +8,11 @@ export function CalendarSyncMenu({ item }: { item: ScheduleItem }) {
   const entry = toCalendarEntry(item);
   return (
     <details className="relative shrink-0 ml-2 group">
-      <summary className="list-none cursor-pointer text-lime-400 hover:text-lime-300 font-extrabold flex items-center space-x-1 text-xs min-h-8 px-1 [&::-webkit-details-marker]:hidden">
+      <summary className="list-none cursor-pointer text-brand hover:text-brand-2 font-extrabold flex items-center space-x-1 text-xs min-h-8 px-1 [&::-webkit-details-marker]:hidden">
         <CalendarPlus className="w-3.5 h-3.5" />
         <span>Sync</span>
       </summary>
-      <div className="absolute right-0 bottom-full mb-2 z-20 w-52 rounded-xl bg-[#18181c] border border-zinc-700 shadow-2xl p-1.5 text-xs">
+      <div className="absolute right-0 bottom-full mb-2 z-20 w-52 rounded-xl bg-surface-4 border border-zinc-700 shadow-2xl p-1.5 text-xs">
         <a
           href={googleCalendarUrl(entry)}
           target="_blank"

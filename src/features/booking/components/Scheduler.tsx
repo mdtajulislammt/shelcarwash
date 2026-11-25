@@ -4,11 +4,7 @@ import { TIME_SLOTS } from '@/config/site';
 import { getBookableDates } from '@/lib/dates';
 import { useAvailability } from '../hooks/useAvailability';
 import { useBookingStore } from '../store/bookingStore';
-
-const SELECTED =
-  'bg-yellow-300 text-black font-extrabold border-yellow-300 shadow-md shadow-yellow-300/30';
-const IDLE = 'bg-[#3a3a3a] hover:bg-[#4a4a4a] border-zinc-600 text-zinc-200';
-const UNAVAILABLE = 'bg-zinc-900 border-zinc-800 text-zinc-600 cursor-not-allowed';
+import { SELECT_CARD } from './selectableStyles';
 
 /** Step 1: date (tomorrow + 13 days, LA time) and one of three arrival windows. */
 export function Scheduler({
@@ -43,7 +39,7 @@ export function Scheduler({
   return (
     <div className="space-y-4 pt-2">
       <h3 className="text-base font-bold text-white flex items-center space-x-2">
-        <Clock className="w-4 h-4 text-yellow-300" />
+        <Clock className="w-4 h-4 text-brand" />
         <span>1. Choose Appointment Date & Time</span>
       </h3>
 
@@ -58,9 +54,9 @@ export function Scheduler({
                 type="button"
                 aria-pressed={isSelected}
                 onClick={() => setDate(item.iso)}
-                className={`p-3 rounded-xl text-center border transition-all ${isSelected ? SELECTED : IDLE}`}
+                className={`${SELECT_CARD} p-3 text-center`}
               >
-                <span className="block text-[11px] uppercase tracking-wider opacity-80">
+                <span className="block text-[11px] uppercase tracking-wider text-card-muted">
                   {item.dayName}
                 </span>
                 <span className="block text-sm font-extrabold mt-0.5">{item.monthDay}</span>
@@ -84,12 +80,10 @@ export function Scheduler({
                 aria-pressed={isSelected}
                 disabled={!slot.available}
                 onClick={() => setSlot(slot.id)}
-                className={`p-3 rounded-xl border text-center transition-all ${
-                  isSelected ? SELECTED : slot.available ? IDLE : UNAVAILABLE
-                }`}
+                className={`${SELECT_CARD} p-3 text-center`}
               >
                 <span className="block text-xs font-extrabold">{slot.label}</span>
-                <span className="block text-[10px] opacity-70 mt-0.5">
+                <span className="block text-[10px] text-card-muted mt-0.5">
                   {slots && !slot.available ? 'Unavailable' : slot.period}
                 </span>
               </button>

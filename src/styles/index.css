@@ -1,17 +1,41 @@
 @import 'tailwindcss';
 
+/*
+ * Brand tokens (match the constantclean.org header). Components use these names only —
+ * e.g. bg-card, bg-brand, text-ink, text-muted, border-card-border, shadow-card.
+ */
 @theme {
-  --color-yellow-50: #ffffea;
-  --color-yellow-100: #ffffb3;
-  --color-yellow-200: #f7ff00;
-  --color-yellow-300: #f7ff00;
-  --color-yellow-400: #f7ff00;
-  --color-yellow-500: #f7ff00;
-  --color-yellow-600: #d3db00;
-  --color-yellow-700: #abb200;
-  --color-yellow-800: #828800;
-  --color-yellow-900: #595d00;
-  --color-yellow-950: #333600;
+  --color-brand: #f4f015;
+  --color-brand-2: #d9d50f;
+  --color-accent-red: #f15543;
+  --color-ink: #20201f;
+  --color-muted: #e5e5e5;
+  --color-card: #4b4b4b;
+  --color-card-hover: #555555;
+  --color-card-border: rgb(255 255 255 / 0.08);
+
+  /* Page + dark surfaces (page background stays black). */
+  --color-page: #050505;
+  --color-surface: #0a0a0d;
+  --color-surface-2: #0f0f13;
+  --color-surface-3: #121216;
+  --color-surface-4: #18181c;
+
+  --radius-card: 12px;
+  --shadow-card: 0 30px 60px rgb(0 0 0 / 0.35);
+  --shadow-card-sm: 0 12px 28px rgb(0 0 0 / 0.3);
+}
+
+/*
+ * Colors that follow the selectable card they sit in (white on gray, ink on yellow).
+ * Use text-card-fg / text-card-muted / text-card-accent / bg-card-chip inside .select-card.
+ */
+@theme inline {
+  --color-card-fg: var(--card-fg);
+  --color-card-muted: var(--card-muted);
+  --color-card-accent: var(--card-accent);
+  --color-card-chip: var(--card-chip);
+  --color-card-chip-fg: var(--card-chip-fg);
 }
 
 @layer base {
@@ -19,7 +43,7 @@
     color-scheme: dark;
   }
   body {
-    background-color: #050505;
+    background-color: var(--color-page);
     color: #f4f4f5;
     font-family:
       system-ui,
@@ -32,33 +56,55 @@
       Cantarell,
       sans-serif;
   }
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+  }
 }
 
-/* Custom Black, Dark Grey, Bright Yellow & Neon Green UI Glows & Card Utilities */
-.glow-yellow {
-  box-shadow: 0 0 25px -3px rgba(247, 255, 0, 0.4);
-}
-
-.glow-green {
-  box-shadow: 0 0 25px -3px rgba(163, 230, 53, 0.35);
-}
-
-.yellow-gradient-text {
-  background: linear-gradient(135deg, #ffffff 0%, #f7ff00 50%, #d3db00 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.yellow-green-gradient-text {
-  background: linear-gradient(135deg, #f7ff00 0%, #a3e635 50%, #bef264 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.dark-glass {
-  background: rgba(18, 18, 22, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+@layer components {
+  /* Vehicle, package, add-on, slot, date, frequency, location and payment cards. */
+  .select-card {
+    --card-fg: #ffffff;
+    --card-muted: var(--color-muted);
+    --card-accent: var(--color-brand);
+    --card-chip: var(--color-brand);
+    --card-chip-fg: var(--color-ink);
+    background-color: var(--color-card);
+    color: var(--card-fg);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card-sm);
+    transition:
+      background-color 150ms ease,
+      box-shadow 150ms ease,
+      transform 150ms ease;
+  }
+  @media (min-width: 640px) {
+    .select-card {
+      box-shadow: var(--shadow-card);
+    }
+  }
+  .select-card:hover:not(:disabled) {
+    background-color: var(--color-card-hover);
+  }
+  .select-card[aria-checked='true'],
+  .select-card[aria-pressed='true'] {
+    --card-fg: var(--color-ink);
+    --card-muted: color-mix(in srgb, var(--color-ink) 82%, transparent);
+    --card-accent: var(--color-ink);
+    --card-chip: var(--color-ink);
+    --card-chip-fg: var(--color-brand);
+    background-image: linear-gradient(135deg, var(--color-brand), var(--color-brand-2));
+    border-color: transparent;
+  }
+  .select-card:disabled {
+    --card-fg: #a1a1aa;
+    --card-muted: #a1a1aa;
+    background-color: var(--color-surface-4);
+    box-shadow: none;
+    cursor: not-allowed;
+  }
 }
 
 /* Smooth custom dark scrollbars */
@@ -67,7 +113,7 @@
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #050505;
+  background: var(--color-page);
 }
 ::-webkit-scrollbar-thumb {
   background: #27272a;
